@@ -5,7 +5,6 @@ import br.com.kuhn.entidades.Locacao;
 import br.com.kuhn.entidades.Usuario;
 import br.com.kuhn.excecoes.FilmeSemEstoqueException;
 import br.com.kuhn.excecoes.LocadoraException;
-import br.com.kuhn.servicos.LocacaoService;
 import br.com.kuhn.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
@@ -14,9 +13,9 @@ import org.junit.rules.ExpectedException;
 import static org.hamcrest.CoreMatchers.is;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 
 public class LocacaoServiceTest {
 
@@ -31,6 +30,19 @@ public class LocacaoServiceTest {
     @Before
     public void exemploBefore(){
         service = new LocacaoService();
+    }
+
+    @Test
+    public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
+        Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+
+        Usuario usuario = new Usuario("Usuario 1");
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 1, 5.0));
+
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        boolean ehSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
+        Assert.assertTrue(ehSegunda);
     }
 
     @Test
@@ -122,7 +134,10 @@ public class LocacaoServiceTest {
     }
 
     @Test
+    //@Ignore
     public void deveAlugarFilme() throws Exception {
+        Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+
         //cenario
         Usuario usuario = new Usuario("Usuario 1");
         List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 5.0));
@@ -131,7 +146,6 @@ public class LocacaoServiceTest {
 
         //verificacao
         Assert.assertThat(locacao.getValor(), is(5.0));//correto
-        Assert.assertThat(locacao.getValor(), is(5.0));//errado
         Assert.assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
         Assert.assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
     }

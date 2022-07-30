@@ -5,7 +5,9 @@ import br.com.kuhn.entidades.Locacao;
 import br.com.kuhn.entidades.Usuario;
 import br.com.kuhn.excecoes.FilmeSemEstoqueException;
 import br.com.kuhn.excecoes.LocadoraException;
+import br.com.kuhn.utils.DataUtils;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +55,9 @@ public class LocacaoService {
 		//Entrega no dia seguinte
 		Date dataEntrega = new Date();
 		dataEntrega = adicionarDias(dataEntrega, 1);
+		if (DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY)){
+			dataEntrega = adicionarDias(dataEntrega, 1);
+		}
 		locacao.setDataRetorno(dataEntrega);
 		
 		//Salvando a locacao...	
