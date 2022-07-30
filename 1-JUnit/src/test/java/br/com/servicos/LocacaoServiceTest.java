@@ -7,9 +7,7 @@ import br.com.kuhn.excecoes.FilmeSemEstoqueException;
 import br.com.kuhn.excecoes.LocadoraException;
 import br.com.kuhn.servicos.LocacaoService;
 import br.com.kuhn.utils.DataUtils;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
@@ -20,15 +18,45 @@ import java.util.Date;
 
 public class LocacaoServiceTest {
 
+    LocacaoService service;
+
+    private int contador = 0;
+
+    private static int contadorStatico = 0;
+
     @Rule
     public ErrorCollector error = new ErrorCollector();
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
+    @Before
+    public void exemploBefore(){
+        service = new LocacaoService();
+        contador++;
+        contadorStatico++;
+        System.out.println("before");
+        System.out.println("contador="+contador);
+        System.out.println("contadorStatico="+contadorStatico);
+    }
+
+    @After
+    public void exemploAfter(){
+        System.out.println("after");
+    }
+
+    @BeforeClass
+    public static void exemploBeforeClass(){
+        System.out.println("exemploBeforeClass");
+    }
+
+    @AfterClass
+    public static void exemploAfterClass(){
+        System.out.println("exemploAfterClass");
+    }
+
     @Test
     public void testeFilmeVazio() throws FilmeSemEstoqueException, LocadoraException {
-        LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
 
         expectedException.expect(LocadoraException.class);
@@ -38,7 +66,6 @@ public class LocacaoServiceTest {
 
     @Test
     public void testeUsuarioVazio() throws FilmeSemEstoqueException {
-        LocacaoService service = new LocacaoService();
         Filme filme = new Filme("Filme 1", 1, 5.0);
 
         try {
@@ -53,7 +80,6 @@ public class LocacaoServiceTest {
     public void testeSemEstoqueEXCEPTION3() throws Exception {
         // VAI FALHAR POR QUE ALTEREI O TIPO DA EXCEÇÃO LANÇADA DE EXCEPTION PARA OUTRA
         //cenario
-        LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
         Filme filme = new Filme("Filme 1", 0, 5.0);
 
@@ -67,7 +93,6 @@ public class LocacaoServiceTest {
     public void testeSemEstoqueEXCEPTION2() {
         // VAI FALHAR POR QUE ALTEREI O TIPO DA EXCEÇÃO LANÇADA DE EXCEPTION PARA OUTRA
         //cenario
-        LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
         Filme filme = new Filme("Filme 1", 0, 5.0);
 
@@ -83,7 +108,6 @@ public class LocacaoServiceTest {
     @Test(expected = FilmeSemEstoqueException.class)
     public void testeSemEstoqueEXCEPTION() throws Exception {
         //cenario
-        LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
         Filme filme = new Filme("Filme 1", 0, 5.0);
 
@@ -93,7 +117,6 @@ public class LocacaoServiceTest {
     @Test
     public void testeComEstoque() throws Exception {
         //cenario
-        LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
         Filme filme = new Filme("Filme 1", 2, 5.0);
 
@@ -109,7 +132,6 @@ public class LocacaoServiceTest {
     @Test
     public void testeComErrorCollector() throws Exception {
         //cenario
-        LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
         Filme filme = new Filme("Filme 1", 2, 5.0);
 

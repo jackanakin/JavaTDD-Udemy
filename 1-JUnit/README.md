@@ -6,3 +6,4 @@
 4. Rules e ErrorCollector para isolamento de testes
 5. Tratamento de exceções
 6. Tratamento de exceções com exceções personalizadas
+7. Before, BeforeClass, After, AfterClass e escopo estático em teste (JUnit reinicializa tudo a cada teste)
