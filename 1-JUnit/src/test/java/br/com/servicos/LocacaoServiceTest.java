@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
+import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -20,8 +21,50 @@ public class LocacaoServiceTest {
     @Rule
     public ErrorCollector error = new ErrorCollector();
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @Test
-    public void teste() {
+    public void testeSemEstoqueEXCEPTION3() throws Exception {
+        //cenario
+        LocacaoService service = new LocacaoService();
+        Usuario usuario = new Usuario("Usuario 1");
+        Filme filme = new Filme("Filme 1", 0, 5.0);
+
+        expectedException.expect(Exception.class);
+        expectedException.expectMessage("Filme sem estoque");
+
+        Locacao locacao = service.alugarFilme(usuario, filme);
+    }
+
+    @Test
+    public void testeSemEstoqueEXCEPTION2() {
+        //cenario
+        LocacaoService service = new LocacaoService();
+        Usuario usuario = new Usuario("Usuario 1");
+        Filme filme = new Filme("Filme 1", 0, 5.0);
+
+        Locacao locacao = null;
+        try {
+            locacao = service.alugarFilme(usuario, filme);
+            Assert.fail("Deveria ter lançado uma exceção");
+        } catch (Exception e) {
+            Assert.assertThat(e.getMessage(), is("Filme sem estoque"));
+        }
+    }
+
+    @Test(expected = Exception.class)
+    public void testeSemEstoqueEXCEPTION() throws Exception {
+        //cenario
+        LocacaoService service = new LocacaoService();
+        Usuario usuario = new Usuario("Usuario 1");
+        Filme filme = new Filme("Filme 1", 0, 5.0);
+
+        Locacao locacao = service.alugarFilme(usuario, filme);
+    }
+
+    @Test
+    public void testeComEstoque() throws Exception {
         //cenario
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
@@ -37,7 +80,7 @@ public class LocacaoServiceTest {
     }
 
     @Test
-    public void teste2() {
+    public void testeComErrorCollector() throws Exception {
         //cenario
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
