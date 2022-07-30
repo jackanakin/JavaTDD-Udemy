@@ -3,6 +3,8 @@ package br.com.servicos;
 import br.com.kuhn.entidades.Filme;
 import br.com.kuhn.entidades.Locacao;
 import br.com.kuhn.entidades.Usuario;
+import br.com.kuhn.excecoes.FilmeSemEstoqueException;
+import br.com.kuhn.excecoes.LocadoraException;
 import br.com.kuhn.servicos.LocacaoService;
 import br.com.kuhn.utils.DataUtils;
 import org.junit.Assert;
@@ -25,7 +27,31 @@ public class LocacaoServiceTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
+    public void testeFilmeVazio() throws FilmeSemEstoqueException, LocadoraException {
+        LocacaoService service = new LocacaoService();
+        Usuario usuario = new Usuario("Usuario 1");
+
+        expectedException.expect(LocadoraException.class);
+        expectedException.expectMessage("Filme vazio");
+        service.alugarFilme(usuario, null);
+    }
+
+    @Test
+    public void testeUsuarioVazio() throws FilmeSemEstoqueException {
+        LocacaoService service = new LocacaoService();
+        Filme filme = new Filme("Filme 1", 1, 5.0);
+
+        try {
+            service.alugarFilme(null, filme);
+            Assert.fail();
+        } catch (LocadoraException e) {
+            Assert.assertThat(e.getMessage(), is("Usuario vazio"));
+        }
+    }
+
+    @Test
     public void testeSemEstoqueEXCEPTION3() throws Exception {
+        // VAI FALHAR POR QUE ALTEREI O TIPO DA EXCEÇÃO LANÇADA DE EXCEPTION PARA OUTRA
         //cenario
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
@@ -39,6 +65,7 @@ public class LocacaoServiceTest {
 
     @Test
     public void testeSemEstoqueEXCEPTION2() {
+        // VAI FALHAR POR QUE ALTEREI O TIPO DA EXCEÇÃO LANÇADA DE EXCEPTION PARA OUTRA
         //cenario
         LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
@@ -53,7 +80,7 @@ public class LocacaoServiceTest {
         }
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = FilmeSemEstoqueException.class)
     public void testeSemEstoqueEXCEPTION() throws Exception {
         //cenario
         LocacaoService service = new LocacaoService();
