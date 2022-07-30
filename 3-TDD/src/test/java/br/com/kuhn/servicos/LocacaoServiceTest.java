@@ -150,8 +150,14 @@ public class LocacaoServiceTest {
 
         //verificacao
         Assert.assertThat(locacao.getValor(), is(5.0));//correto
+
+        // é hoje
         Assert.assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
+        Assert.assertThat(locacao.getDataLocacao(), MatchersProprios.ehHoje());
+
+        // é de 1 dia com diferença
         Assert.assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
+        Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.ehHojeComDiferencaDias(1));
     }
 
 }
