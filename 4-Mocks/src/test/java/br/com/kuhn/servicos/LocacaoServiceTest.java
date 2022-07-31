@@ -1,6 +1,7 @@
 package br.com.kuhn.servicos;
 
 import br.com.kuhn.builder.FilmeBuilder;
+import br.com.kuhn.builder.LocacaoBuilder;
 import br.com.kuhn.builder.UsuarioBuilder;
 import br.com.kuhn.dao.LocacaoDAO;
 import br.com.kuhn.dao.LocacaoDAOFake;
@@ -27,6 +28,8 @@ public class LocacaoServiceTest {
 
     private LocacaoService service;
     private SPCService spcService;
+    private LocacaoDAO locacaoDAO;
+    private EmailService emailService;
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -37,10 +40,49 @@ public class LocacaoServiceTest {
     @Before
     public void exemploBefore(){
         service = new LocacaoService();
-        LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+        locacaoDAO = Mockito.mock(LocacaoDAO.class);
         spcService = Mockito.mock(SPCService.class);
-        service.setLocacaoDAO(dao);
+        emailService = Mockito.mock(EmailService.class);
+        service.setLocacaoDAO(locacaoDAO);
         service.setSpcService(spcService);
+        service.setEmailService(emailService);
+    }
+
+    @Test
+    public void deveEnviarEmailParaLocacoesAtrasadas(){
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        Usuario usuario2 = UsuarioBuilder.umUsuario().comNome("Jardel").agora();
+
+        List<Locacao> locacaos = Arrays.asList(LocacaoBuilder
+                .umLocacao()
+                .comUsuario(usuario)
+                .comDataRetorno(DataUtils.obterDataComDiferencaDias(-2)).agora());
+
+        Mockito.when(locacaoDAO.obterLocacoesPendentes()).thenReturn(locacaos);
+
+        service.notificarAtrasos();
+
+        Mockito.verify(emailService).notificarAtraso(usuario);
+        //Mockito.verify(emailService).notificarAtraso(usuario2);
+    }
+
+    @Test
+    public void naoDeveAlugarFilmeParaNegativadoSPC2() throws FilmeSemEstoqueException {
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        Usuario usuario2 = UsuarioBuilder.umUsuario().comNome("Jardel").agora();
+        List<Filme> filmes = Arrays.asList(FilmeBuilder.umFilme().agora());
+
+        Mockito.when(spcService.possuiNegativacao(usuario)).thenReturn(true);
+
+        try {
+            service.alugarFilme(usuario, filmes);
+            Assert.fail("Não devia passar daqui");
+        } catch (LocadoraException e) {
+            Assert.assertThat(e.getMessage(), is("Usuario negativado"));
+        }
+
+        Mockito.verify(spcService).possuiNegativacao(usuario);
+        //service.alugarFilme(usuario2, filmes); //vai falhar pois não é o mesmo usuário
     }
 
     @Test
@@ -55,6 +97,8 @@ public class LocacaoServiceTest {
         expectedException.expectMessage("Usuario negativado");
 
         service.alugarFilme(usuario, filmes);
+
+        Mockito.verify(spcService).possuiNegativacao(usuario);
         //service.alugarFilme(usuario2, filmes); //vai falhar pois não é o mesmo usuário
     }
 
