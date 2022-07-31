@@ -5,6 +5,7 @@ import br.com.kuhn.entidades.Locacao;
 import br.com.kuhn.entidades.Usuario;
 import br.com.kuhn.excecoes.FilmeSemEstoqueException;
 import br.com.kuhn.excecoes.LocadoraException;
+import br.com.kuhn.matchers.MatchersProprios;
 import br.com.kuhn.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
@@ -41,8 +42,11 @@ public class LocacaoServiceTest {
 
         Locacao locacao = service.alugarFilme(usuario, filmes);
 
-        boolean ehSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
-        Assert.assertTrue(ehSegunda);
+        //boolean ehSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
+        //Assert.assertTrue(ehSegunda);
+        //Assert.assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+        Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiEm(Calendar.MONDAY));
+        Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiNumaSegunda());
     }
 
     @Test
