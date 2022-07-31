@@ -14,7 +14,10 @@ import br.com.kuhn.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -25,9 +28,13 @@ import java.util.List;
 
 public class LocacaoServiceTest {
 
+    @InjectMocks
     private LocacaoService service;
+    @Mock
     private SPCService spcService;
+    @Mock
     private LocacaoDAO locacaoDAO;
+    @Mock
     private EmailService emailService;
 
     @Rule
@@ -38,13 +45,16 @@ public class LocacaoServiceTest {
 
     @Before
     public void exemploBefore(){
-        service = new LocacaoService();
-        locacaoDAO = Mockito.mock(LocacaoDAO.class);
-        spcService = Mockito.mock(SPCService.class);
-        emailService = Mockito.mock(EmailService.class);
-        service.setLocacaoDAO(locacaoDAO);
-        service.setSpcService(spcService);
-        service.setEmailService(emailService);
+        MockitoAnnotations.initMocks(this);
+
+        //Não precisa graças ao @Mock e @InjectMocks
+        //service = new LocacaoService();
+        //locacaoDAO = Mockito.mock(LocacaoDAO.class);
+        //spcService = Mockito.mock(SPCService.class);
+        //emailService = Mockito.mock(EmailService.class);
+        //service.setLocacaoDAO(locacaoDAO);
+        //service.setSpcService(spcService);
+        //service.setEmailService(emailService);
     }
 
     @Test

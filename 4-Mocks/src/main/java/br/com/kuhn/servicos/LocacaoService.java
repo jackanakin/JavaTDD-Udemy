@@ -85,6 +85,11 @@ public class LocacaoService {
 		}
 	}
 
+	/*
+
+	Não precisa graças ao @Mock e @InjectMocks
+
+
 	public void setLocacaoDAO(LocacaoDAO dao){
 		this.locacaoDAO = dao;
 	}
@@ -96,4 +101,6 @@ public class LocacaoService {
 	public void setEmailService(EmailService emailService){
 		this.emailService = emailService;
 	}
+
+	*/
 }
