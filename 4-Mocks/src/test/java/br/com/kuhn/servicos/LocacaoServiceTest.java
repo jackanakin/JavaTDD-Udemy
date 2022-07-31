@@ -2,6 +2,7 @@ package br.com.kuhn.servicos;
 
 import br.com.kuhn.builder.FilmeBuilder;
 import br.com.kuhn.builder.UsuarioBuilder;
+import br.com.kuhn.dao.LocacaoDAOFake;
 import br.com.kuhn.entidades.Filme;
 import br.com.kuhn.entidades.Locacao;
 import br.com.kuhn.entidades.Usuario;
@@ -33,6 +34,7 @@ public class LocacaoServiceTest {
     @Before
     public void exemploBefore(){
         service = new LocacaoService();
+        service.setLocacaoDAO(new LocacaoDAOFake());
     }
 
     @Test
