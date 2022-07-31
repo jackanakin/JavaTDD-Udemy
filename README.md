@@ -3,4 +3,4 @@
 
 1. JUnit: Utilizando métodos do Assert, manipulado equals() da entidade para customizar comparação e assertSame, AssertThat e CoreMatchers, Rules e ErrorCollector, Tratamento de exceções, Before e After (+Class), FixMethodOrder
 2. JUnit - Desafio: Refatorar o projeto anterior 1-JUnit para que a classe Locacao aceite um List de Filme em vez de um único objeto
-3. TDD: Teste -> Código -> Refatoramento
+3. TDD: Teste -> Código -> Refatoramento, Matcher personalizado, Builder e Chaining Method
