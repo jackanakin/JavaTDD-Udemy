@@ -1,5 +1,7 @@
 package br.com.kuhn.servicos;
 
+import br.com.kuhn.builder.FilmeBuilder;
+import br.com.kuhn.builder.UsuarioBuilder;
 import br.com.kuhn.entidades.Filme;
 import br.com.kuhn.entidades.Locacao;
 import br.com.kuhn.entidades.Usuario;
@@ -36,13 +38,13 @@ public class CalculoValorLocacaoTest {
         service = new LocacaoService();
     }
 
-    private static Filme filme1 = new Filme("Filme 1", 2, 4.0);
-    private static  Filme filme2 = new Filme("Filme 2", 2, 4.0);
-    private static  Filme filme3 = new Filme("Filme 3", 3, 4.0);
-    private static  Filme filme4 = new Filme("Filme 4", 3, 4.0);
-    private static  Filme filme5 = new Filme("Filme 5", 3, 4.0);
-    private static  Filme filme6 = new Filme("Filme 6", 3, 4.0);
-    private static  Filme filme7 = new Filme("Filme 6", 3, 4.0);
+    private static Filme filme1 = FilmeBuilder.umFilme().agora();
+    private static  Filme filme2 = FilmeBuilder.umFilme().agora();
+    private static  Filme filme3 = FilmeBuilder.umFilme().agora();
+    private static  Filme filme4 = FilmeBuilder.umFilme().agora();
+    private static  Filme filme5 = FilmeBuilder.umFilme().agora();
+    private static  Filme filme6 = FilmeBuilder.umFilme().agora();
+    private static  Filme filme7 = FilmeBuilder.umFilme().agora();
 
     @Parameterized.Parameters(name = "Teste {2}")
     public static Collection<Object[]> getParametros(){
@@ -58,7 +60,7 @@ public class CalculoValorLocacaoTest {
 
     @Test
     public void deveCalcularValorLocacaoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
-        Usuario usuario = new Usuario("Usuario 1");
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
 
         Locacao resultado = service.alugarFilme(usuario, filmes);
 
