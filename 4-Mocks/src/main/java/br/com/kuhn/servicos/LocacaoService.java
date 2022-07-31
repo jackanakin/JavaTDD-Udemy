@@ -17,6 +17,7 @@ import static br.com.kuhn.utils.DataUtils.adicionarDias;
 public class LocacaoService {
 
 	private LocacaoDAO locacaoDAO;
+	private SPCService spcService;
 
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
 		if (usuario == null){
@@ -31,6 +32,10 @@ public class LocacaoService {
 			if (filme.getEstoque() == 0){
 				throw new FilmeSemEstoqueException();
 			}
+		}
+
+		if (spcService.possuiNegativacao(usuario)){
+			throw new LocadoraException("Usuario negativado");
 		}
 
 		Locacao locacao = new Locacao();
@@ -74,4 +79,7 @@ public class LocacaoService {
 		this.locacaoDAO = dao;
 	}
 
+	public void setSpcService(SPCService spcService){
+		this.spcService = spcService;
+	}
 }

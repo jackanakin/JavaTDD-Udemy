@@ -25,7 +25,8 @@ import java.util.List;
 
 public class LocacaoServiceTest {
 
-    LocacaoService service;
+    private LocacaoService service;
+    private SPCService spcService;
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -37,7 +38,24 @@ public class LocacaoServiceTest {
     public void exemploBefore(){
         service = new LocacaoService();
         LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+        spcService = Mockito.mock(SPCService.class);
         service.setLocacaoDAO(dao);
+        service.setSpcService(spcService);
+    }
+
+    @Test
+    public void naoDeveAlugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException, LocadoraException {
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        Usuario usuario2 = UsuarioBuilder.umUsuario().comNome("Jardel").agora();
+        List<Filme> filmes = Arrays.asList(FilmeBuilder.umFilme().agora());
+
+        Mockito.when(spcService.possuiNegativacao(usuario)).thenReturn(true);
+
+        expectedException.expect(LocadoraException.class);
+        expectedException.expectMessage("Usuario negativado");
+
+        service.alugarFilme(usuario, filmes);
+        //service.alugarFilme(usuario2, filmes); //vai falhar pois não é o mesmo usuário
     }
 
     @Test

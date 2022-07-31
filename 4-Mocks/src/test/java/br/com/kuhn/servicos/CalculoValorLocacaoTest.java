@@ -25,7 +25,8 @@ import static org.hamcrest.CoreMatchers.is;
 @RunWith(Parameterized.class)
 public class CalculoValorLocacaoTest {
 
-    public LocacaoService service;
+    private LocacaoService service;
+    private SPCService spcService;
 
     @Parameterized.Parameter
     public List<Filme> filmes;
@@ -40,7 +41,9 @@ public class CalculoValorLocacaoTest {
     public void before(){
         service = new LocacaoService();
         LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+        spcService = Mockito.mock(SPCService.class);
         service.setLocacaoDAO(dao);
+        service.setSpcService(spcService);
     }
 
     private static Filme filme1 = FilmeBuilder.umFilme().agora();
