@@ -7,3 +7,4 @@
 5. Criado Matcher personalizado
 6. Suíte de testes vs Test all no pacote
 7. Builder e Chaining Method
+8. Coverage report

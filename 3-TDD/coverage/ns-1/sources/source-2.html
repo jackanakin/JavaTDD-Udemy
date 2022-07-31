@@ -1,0 +1,138 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Filme</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.kuhn.entidades</a>
+</div>
+
+<h1>Coverage Summary for Class: Filme (br.com.kuhn.entidades)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Filme</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (6/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    54.5%
+  </span>
+  <span class="absValue">
+    (6/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.kuhn.entidades;
+&nbsp;
+&nbsp;public class Filme {
+&nbsp;
+&nbsp;	private String nome;
+&nbsp;	private Integer estoque;
+&nbsp;	private Double precoLocacao;  
+&nbsp;	
+<b class="fc">&nbsp;	public Filme() {}</b>
+&nbsp;	
+<b class="nc">&nbsp;	public Filme(String nome, Integer estoque, Double precoLocacao) {</b>
+<b class="nc">&nbsp;		this.nome = nome;</b>
+<b class="nc">&nbsp;		this.estoque = estoque;</b>
+<b class="nc">&nbsp;		this.precoLocacao = precoLocacao;</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	public String getNome() {
+<b class="nc">&nbsp;		return nome;</b>
+&nbsp;	}
+&nbsp;	public void setNome(String nome) {
+<b class="fc">&nbsp;		this.nome = nome;</b>
+&nbsp;	}
+&nbsp;	public Integer getEstoque() {
+<b class="fc">&nbsp;		return estoque;</b>
+&nbsp;	}
+&nbsp;	public void setEstoque(Integer estoque) {
+<b class="fc">&nbsp;		this.estoque = estoque;</b>
+&nbsp;	}
+&nbsp;	public Double getPrecoLocacao() {
+<b class="fc">&nbsp;		return precoLocacao;</b>
+&nbsp;	}
+&nbsp;	public void setPrecoLocacao(Double precoLocacao) {
+<b class="fc">&nbsp;		this.precoLocacao = precoLocacao;</b>
+&nbsp;	}
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-07-31 10:27</div>
+</div>
+</body>
+</html>
