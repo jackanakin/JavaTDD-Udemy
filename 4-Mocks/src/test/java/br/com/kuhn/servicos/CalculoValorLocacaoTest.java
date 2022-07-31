@@ -2,6 +2,7 @@ package br.com.kuhn.servicos;
 
 import br.com.kuhn.builder.FilmeBuilder;
 import br.com.kuhn.builder.UsuarioBuilder;
+import br.com.kuhn.dao.LocacaoDAO;
 import br.com.kuhn.dao.LocacaoDAOFake;
 import br.com.kuhn.entidades.Filme;
 import br.com.kuhn.entidades.Locacao;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,7 +39,8 @@ public class CalculoValorLocacaoTest {
     @Before
     public void before(){
         service = new LocacaoService();
-        service.setLocacaoDAO(new LocacaoDAOFake());
+        LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+        service.setLocacaoDAO(dao);
     }
 
     private static Filme filme1 = FilmeBuilder.umFilme().agora();

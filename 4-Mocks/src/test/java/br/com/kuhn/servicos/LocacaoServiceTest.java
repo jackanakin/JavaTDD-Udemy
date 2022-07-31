@@ -2,6 +2,7 @@ package br.com.kuhn.servicos;
 
 import br.com.kuhn.builder.FilmeBuilder;
 import br.com.kuhn.builder.UsuarioBuilder;
+import br.com.kuhn.dao.LocacaoDAO;
 import br.com.kuhn.dao.LocacaoDAOFake;
 import br.com.kuhn.entidades.Filme;
 import br.com.kuhn.entidades.Locacao;
@@ -13,6 +14,7 @@ import br.com.kuhn.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -34,7 +36,8 @@ public class LocacaoServiceTest {
     @Before
     public void exemploBefore(){
         service = new LocacaoService();
-        service.setLocacaoDAO(new LocacaoDAOFake());
+        LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+        service.setLocacaoDAO(dao);
     }
 
     @Test
