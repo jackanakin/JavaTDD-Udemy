@@ -9,3 +9,4 @@
 7. Mock e InjectMocks para injeção de dependências
 8. Tratando Exceptions
 9. ArgumentCaptor
+10. SpyMock
