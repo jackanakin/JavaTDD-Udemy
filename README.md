@@ -5,4 +5,5 @@
 2. JUnit - Desafio: Refatorar o projeto anterior 1-JUnit para que a classe Locacao aceite um List de Filme em vez de um único objeto
 3. TDD: Teste -> Código -> Refatoramento, Matcher personalizado, Builder e Chaining Method, Coverage report
 4. Mocks: Mock e InjectMocks, when, thenReturn, verify, times, atLeast, atMost, atLeastOnce, verifyNoMoreInteractions, verifyZeroInteractions, never, any, ArgumentCaptor e SpyMock
-5. PowerMock: 
+5. PowerMock: PowerMockito.whenNew para mockar new Date(), Calendar.getInstance(). Mock de métodos, verifyPrivate e Whitebox.invokeMethod
+6. Refatoracao: refatorado e eliminado PowerMock
