@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(ParallelRunner.class)
+//@RunWith(ParallelRunner.class)
 public class CalculadoraTest {
     private Calculadora calculadora;
 
