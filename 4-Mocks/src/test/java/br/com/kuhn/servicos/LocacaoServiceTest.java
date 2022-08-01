@@ -14,10 +14,7 @@ import br.com.kuhn.utils.DataUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -55,6 +52,21 @@ public class LocacaoServiceTest {
         //service.setLocacaoDAO(locacaoDAO);
         //service.setSpcService(spcService);
         //service.setEmailService(emailService);
+    }
+
+    @Test
+    public void deveProrrogarUmaLocacao(){
+        Locacao locacao = LocacaoBuilder.umLocacao().agora();
+
+        service.prorrogarLocacao(locacao, 3);
+
+        ArgumentCaptor<Locacao> argumentCaptor = ArgumentCaptor.forClass(Locacao.class);
+        Mockito.verify(locacaoDAO).salvar(argumentCaptor.capture());
+        Locacao locacaoRetornada = argumentCaptor.getValue();
+
+        error.checkThat(locacaoRetornada.getValor(), is(12d));
+        error.checkThat(locacaoRetornada.getDataLocacao(), MatchersProprios.ehHoje());
+        error.checkThat(locacaoRetornada.getDataRetorno(), MatchersProprios.ehHojeComDiferencaDias(3));
     }
 
     @Test

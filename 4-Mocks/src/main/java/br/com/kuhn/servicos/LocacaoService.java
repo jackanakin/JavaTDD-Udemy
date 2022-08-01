@@ -8,6 +8,7 @@ import br.com.kuhn.excecoes.FilmeSemEstoqueException;
 import br.com.kuhn.excecoes.LocadoraException;
 import br.com.kuhn.utils.DataUtils;
 
+import javax.xml.crypto.Data;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -91,6 +92,16 @@ public class LocacaoService {
 				emailService.notificarAtraso(locacao.getUsuario());
 			}
 		}
+	}
+
+	public void prorrogarLocacao(Locacao locacao, int dias){
+		Locacao novaLocacao = new Locacao();
+		novaLocacao.setUsuario(locacao.getUsuario());
+		novaLocacao.setFilmes(locacao.getFilmes());
+		novaLocacao.setDataLocacao(new Date());
+		novaLocacao.setDataRetorno(DataUtils.obterDataComDiferencaDias(dias));
+		novaLocacao.setValor(locacao.getValor() * dias);
+		locacaoDAO.salvar(novaLocacao);
 	}
 
 	/*
