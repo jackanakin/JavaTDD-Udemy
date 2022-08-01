@@ -19,6 +19,7 @@ import org.mockito.*;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -58,6 +59,15 @@ public class LocacaoServiceTest {
         //service.setLocacaoDAO(locacaoDAO);
         //service.setSpcService(spcService);
         //service.setEmailService(emailService);
+    }
+
+    @Test
+    public void deveCalcularValorLocacao() throws Exception {
+        List<Filme> filmes = Arrays.asList(FilmeBuilder.umFilme().agora());
+
+        Double valor = (Double) Whitebox.invokeMethod(service, "calcularValorLocacao", filmes);
+
+        Assert.assertThat(valor, is(4d));
     }
 
     @Test
