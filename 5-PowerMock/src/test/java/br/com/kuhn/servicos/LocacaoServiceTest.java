@@ -24,7 +24,6 @@ import static org.hamcrest.CoreMatchers.is;
 
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RunWith(PowerMockRunner.class)
@@ -49,6 +48,7 @@ public class LocacaoServiceTest {
     @Before
     public void exemploBefore(){
         MockitoAnnotations.initMocks(this);
+        service = PowerMockito.spy(service);
 
         //Não precisa graças ao @Mock e @InjectMocks
         //service = new LocacaoService();
@@ -58,6 +58,20 @@ public class LocacaoServiceTest {
         //service.setLocacaoDAO(locacaoDAO);
         //service.setSpcService(spcService);
         //service.setEmailService(emailService);
+    }
+
+    @Test
+    public void deveAlugarFilmeSemCalcularValor() throws Exception {
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        List<Filme> filmes = Arrays.asList(FilmeBuilder.umFilme().agora());
+
+        PowerMockito.doReturn(1.0).when(service, "calcularValorLocacao", filmes);
+
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        Assert.assertThat(locacao.getValor(), is(1.0));
+
+        PowerMockito.verifyPrivate(service).invoke("calcularValorLocacao", filmes);
     }
 
     @Test
