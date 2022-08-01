@@ -7,3 +7,4 @@
 5. Mockito.verify para verificar retorno de métodos
 6. Mockito times, atLeast, atMost, atLeastOnce, verifyNoMoreInteractions, verifyZeroInteractions, never, any
 7. Mock e InjectMocks para injeção de dependências
+8. Tratando Exceptions
