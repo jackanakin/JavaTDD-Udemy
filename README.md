@@ -8,3 +8,5 @@
 5. PowerMock: PowerMockito.whenNew para mockar new Date(), Calendar.getInstance(). Mock de métodos, verifyPrivate e Whitebox.invokeMethod
 6. Refatoracao: refatorado e eliminado PowerMock
 7. TestesParalelos: testes paralelos com maven-surefire-plugin e classe personalizada implementando BlockJUnit4ClassRunner
+
+Como testar: Cenário -> Ação -> Verificação
